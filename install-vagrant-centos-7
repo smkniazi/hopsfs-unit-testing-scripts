@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+set -x
+cd /etc/yum.repos.d/
+wget http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+yum update -y
+yum -y install epel-release
+yum -y install gcc make patch  dkms qt libgomp
+yum -y install kernel-headers kernel-devel fontforge binutils glibc-headers glibc-devel
+yum -y install VirtualBox-6.0
+
+cd
+wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_x86_64.rpm
+yum -y localinstall vagrant_1.8.6_x86_64.rpm
+
+
