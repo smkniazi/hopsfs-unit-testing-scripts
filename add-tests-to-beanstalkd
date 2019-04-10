@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ ! "$#" -eq 1 ]; then
+    echo "Please enter file name containing unit test names "
+    exit 1
+fi
+
+file=$1
+
+for unittest in $(cat $file); do
+  beanstalkd-cli --server localhost --port 8888 put --tube testing --data $unittest 
+done
