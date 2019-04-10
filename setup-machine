@@ -2,94 +2,95 @@
 set -x
 set -e
 
-#sudo apt-get update
-#
-## git
-#sudo apt-get install git -y
-#
-## java
-##sudo add-apt-repository ppa:webupd8team/java -y
-##sudo apt-get update -y
-##sudo apt-get install oracle-java8-installer -y
-#
-## maven
-#sudo apt-get install maven -y
-#
-## cmake
-#sudo apt install cmake -y
-#
-## protobuffer
-#sudo apt-get install autoconf automake libtool curl make g++ unzip -y
-#wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
-#tar -xvf protobuf-2.5.0.tar.gz
-#cd protobuf-2.5.0
-#./configure
-#make -j 4
-#make check
-#sudo make install
-#sudo ldconfig # refresh shared library cache.
-##./configure --prefix=/usr
-#
-## mysql cluster
-#sudo cp /srv/hops/mysql-7.6.9/lib/libndbclient.so.6.1.0 /lib64/libndbclient.so
-#sudo cp /srv/hops/mysql-7.6.9/lib/libndbclient.so.6.1.0 /usr/lib/libndbclient.so
-#
-## cmake zlib dependency?
-#sudo apt-get install zlib1g-dev -y
-#
-## openssl dev lib
-#sudo apt-get install libssl-dev -y
-#
-## epipe specific
-#sudo apt-get install rapidjson-dev -y
-#sudo apt-get install libcurl4-openssl-dev -y
-#sudo apt-get install libboost-all-dev -y
-#
+sudo apt-get update
 
-### package config needed for compiling hops
-#sudo apt-get install pkg-config -y 
-#
-#cd
-#mkdir -p code/hops
-#cd code/hops
-#git clone https://github.com/smkniazi/hops
-#git clone https://github.com/smkniazi/hops-metadata-dal
-#git clone https://github.com/smkniazi/hops-metadata-dal-impl-ndb
-#git clone https://github.com/hopshadoop/hops-gpu-management
-#git clone https://github.com/hopshadoop/hops-gpu-management-impl-nvidia
-#
-#
-##fix connection
-#cd ~/code/hops/hops-metadata-dal-impl-ndb/src/main/resources
-#cp ndb-config.properties.template ndb-config.properties
-#sed -i "s#com.mysql.clusterj.connectstring.*#com.mysql.clusterj.connectstring=localhost#g" ndb-config.properties
-#sed -i "s#com.mysql.clusterj.database.*#com.mysql.clusterj.database=hop_salman#g" ndb-config.properties
-#sed -i "s#io.hops.metadata.ndb.mysqlserver.host.*#io.hops.metadata.ndb.mysqlserver.host=localhost#g" ndb-config.properties
-#sed -i "s#io.hops.metadata.ndb.mysqlserver.username.*#io.hops.metadata.ndb.mysqlserver.username=hop#g" ndb-config.properties
-#sed -i "s#io.hops.metadata.ndb.mysqlserver.password#io.hops.metadata.ndb.mysqlserver.password=hop#g" ndb-config.properties
-#
-#
-#cd ~/code/hops/hops-metadata-dal-impl-ndb/schema
-#mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP DATABASE IF EXISTS hop_salman" | true
-#mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "ALTER TABLESPACE ts_1 drop datafile 'ts_1_data_file_0.dat' ENGINE ndbcluster" | true
-#mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP TABLESPACE ts_1 ENGINE ndbcluster" | true
-#mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP LOGFILE GROUP lg_1 ENGINE ndbcluster" | true
-#mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "CREATE DATABASE hop_salman"  | true
-#source ./create-tables.sh localhost 3306 hop hop hop_salman
-#
-#cd ~/code/hops/hops-gpu-management
-#mvn clean install -DskipTests   
-#cd ~/code/hops/hops-gpu-management-impl-nvidia
-#mvn clean install -DskipTests   
-#cd ~/code/hops/hops-metadata-dal
-#mvn clean install -DskipTests   
-#cd ~/code/hops/hops-metadata-dal-impl-ndb
-#mvn clean install -DskipTests   
+# git
+sudo apt-get install git -y
+git config --global user.name "Salman Niazi"
+git config --global user.email "salman.nz@gmail.com" 
+
+# java
+#sudo add-apt-repository ppa:webupd8team/java -y
+#sudo apt-get update -y
+#sudo apt-get install oracle-java8-installer -y
+
+# maven
+sudo apt-get install maven -y
+
+# cmake
+sudo apt install cmake -y
+
+# protobuffer
+sudo apt-get install autoconf automake libtool curl make g++ unzip -y
+wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
+tar -xvf protobuf-2.5.0.tar.gz
+cd protobuf-2.5.0
+./configure
+make -j 4
+make check
+sudo make install
+sudo ldconfig # refresh shared library cache.
+
+# mysql cluster
+sudo find /srv/hops/ -iname "libndbclient.so*" -type f -exec cp {} /lib64/libndbclient.so \;
+sudo find /srv/hops/ -iname "libndbclient.so*" -type f -exec cp {} /usr/lib/libndbclient.so \;
+
+# cmake zlib dependency?
+sudo apt-get install zlib1g-dev -y
+
+# openssl dev lib
+sudo apt-get install libssl-dev -y
+
+# epipe specific
+sudo apt-get install rapidjson-dev -y
+sudo apt-get install libcurl4-openssl-dev -y
+sudo apt-get install libboost-all-dev -y
+
+## package config needed for compiling hops
+sudo apt-get install pkg-config -y 
+
+cd
+mkdir -p code/hops
+cd code/hops
+git clone https://github.com/smkniazi/hops
+git clone https://github.com/smkniazi/hops-metadata-dal
+git clone https://github.com/smkniazi/hops-metadata-dal-impl-ndb
+git clone https://github.com/hopshadoop/hops-gpu-management
+git clone https://github.com/hopshadoop/hops-gpu-management-impl-nvidia
+
+
+#fix connection
+cd ~/code/hops/hops-metadata-dal-impl-ndb/src/main/resources
+cp ndb-config.properties.template ndb-config.properties
+sed -i "s#com.mysql.clusterj.connectstring.*#com.mysql.clusterj.connectstring=localhost#g" ndb-config.properties
+sed -i "s#com.mysql.clusterj.database.*#com.mysql.clusterj.database=hop_salman#g" ndb-config.properties
+sed -i "s#io.hops.metadata.ndb.mysqlserver.host.*#io.hops.metadata.ndb.mysqlserver.host=localhost#g" ndb-config.properties
+sed -i "s#io.hops.metadata.ndb.mysqlserver.username.*#io.hops.metadata.ndb.mysqlserver.username=hop#g" ndb-config.properties
+sed -i "s#io.hops.metadata.ndb.mysqlserver.password#io.hops.metadata.ndb.mysqlserver.password=hop#g" ndb-config.properties
+
+
+cd ~/code/hops/hops-metadata-dal-impl-ndb/schema
+mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP DATABASE IF EXISTS hop_salman" | true
+mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "ALTER TABLESPACE ts_1 drop datafile 'ts_1_data_file_0.dat' ENGINE ndbcluster" | true
+mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP TABLESPACE ts_1 ENGINE ndbcluster" | true
+mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP LOGFILE GROUP lg_1 ENGINE ndbcluster" | true
+mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "CREATE DATABASE hop_salman"  | true
+source ./create-tables.sh localhost 3306 hop hop hop_salman
+
+cd ~/code/hops/hops-gpu-management
+mvn clean install -DskipTests   
+cd ~/code/hops/hops-gpu-management-impl-nvidia
+mvn clean install -DskipTests   
+cd ~/code/hops/hops-metadata-dal
+mvn clean install -DskipTests   
+cd ~/code/hops/hops-metadata-dal-impl-ndb
+mvn clean install -DskipTests   
 cd ~/code/hops/hops
 mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests
 mvn test-compile
 
-
+# distributed testing related
+sudo apt-get install beanstalkd -y
 
 exit 0
 
