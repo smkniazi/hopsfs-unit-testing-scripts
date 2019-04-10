@@ -22,6 +22,7 @@ do
   echo "Running $unittest"
   $DIR/run-unit-test $unittest
   retval=$?
+  echo "Finished $unittest"
 
   ssh $user@$mastermachine "mkdir -p $outputdir"
 
