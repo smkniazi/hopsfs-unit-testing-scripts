@@ -44,8 +44,11 @@ set -e
 #sudo apt-get install rapidjson-dev -y
 #sudo apt-get install libcurl4-openssl-dev -y
 #sudo apt-get install libboost-all-dev -y
-#sudo mv mysql /usr/local/ #the untarred dir from step 6
+#
 
+### package config needed for compiling hops
+#sudo apt-get install pkg-config -y 
+#
 #cd
 #mkdir -p code/hops
 #cd code/hops
@@ -56,7 +59,7 @@ set -e
 #git clone https://github.com/hopshadoop/hops-gpu-management-impl-nvidia
 #
 #
-#fix connection
+##fix connection
 #cd ~/code/hops/hops-metadata-dal-impl-ndb/src/main/resources
 #cp ndb-config.properties.template ndb-config.properties
 #sed -i "s#com.mysql.clusterj.connectstring.*#com.mysql.clusterj.connectstring=localhost#g" ndb-config.properties
@@ -82,9 +85,9 @@ set -e
 #mvn clean install -DskipTests   
 #cd ~/code/hops/hops-metadata-dal-impl-ndb
 #mvn clean install -DskipTests   
-#cd ~/code/hops/hops
-#mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests
-#mvn test-compile
+cd ~/code/hops/hops
+mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests
+mvn test-compile
 
 
 
