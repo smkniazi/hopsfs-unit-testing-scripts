@@ -18,17 +18,23 @@ do
     continue
   fi
 
+  start=`date +%s`
+
   killall java
   echo "Running $unittest"
   $DIR/run-unit-test $unittest
   retval=$?
   echo "Finished $unittest"
 
+  end=`date +%s`
+  runtime=$((end-start))
+  timestamp=$(date)
+
   ssh $user@$mastermachine "mkdir -p $outputdir"
 
   if [ "$retval" -eq 0 ]; then
       echo "Test Passed"
-      ssh $user@$mastermachine "echo -e 'Pass\t\tRanOn: $thismachine\t\t$unittest' >> $outputdir/results.txt"
+      ssh $user@$mastermachine "echo -e 'Pass\tRanOn: $thismachine\t$TS: $timestamp\tDuration: $runtime sec\t\t$unittest' >> $outputdir/results.txt"
   else
       echo "Test Failed"
       pushd .
@@ -36,7 +42,7 @@ do
       TestNameSimple=`echo $unittest | sed 's/.java//g'`
       FullPath=`find . -iname "*$TestNameSimple-output.txt"`
       if [ -n "$FullPath" ]; then
-        ssh $user@$mastermachine "echo -e 'FAIL\t\tRanOn: $thismachine\t\t$unittest' >> $outputdir/results.txt"
+        ssh $user@$mastermachine "echo -e 'FAIL\tRanOn: $thismachine\t$TS: $timestamp\tDuration: $runtime sec\t\t$unittest' >> $outputdir/results.txt"
         scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
       fi
       popd
