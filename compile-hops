@@ -26,16 +26,19 @@ mvn clean install -DskipTests
 cd ~/code/hops/hops-metadata-dal
 clean-repo
 git checkout $branch
+git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops-metadata-dal-impl-ndb
 clean-repo
 git checkout $branch
+git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops
 clean-repo
 git checkout $branch
+git pull
 mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests
 mvn test-compile
 
