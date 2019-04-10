@@ -28,7 +28,7 @@ do
 
   if [ "$retval" -eq 0 ]; then
       echo "Test Passed"
-      ssh $user@$mastermachine "echo 'PASSED    $unittest\t\t\t\tRanOn: $thismachine' > $outputdir/results.txt"
+      ssh $user@$mastermachine "echo 'Pass    $unittest\t\t\t\tRanOn: $thismachine' > $outputdir/results.txt"
   else
       echo "Test Failed"
       pushd .
