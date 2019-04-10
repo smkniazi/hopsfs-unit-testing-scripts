@@ -3,14 +3,14 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 user=vagrant
-machine=localhost
+mastermachine=localhost
 outputdir=~/test-results
-
+port=8888
 thismachine=$(hostname)
 
 while true;
 do
-  unittest=$(beanstalkd-cli --server localhost --port 8888 pop --tube testing)
+  unittest=$(beanstalkd-cli --server $mastermachine --port $port pop --tube testing)
   
   if [ -z "$unittest" ]; then
     sleep 1
@@ -22,11 +22,11 @@ do
   $DIR/run-unit-test $unittest
   retval=$?
 
-  ssh $user@$machine "mkdir -p $outputdir"
+  ssh $user@$mastermachine "mkdir -p $outputdir"
 
   if [ "$retval" -eq 0 ]; then
       echo "Test Passed"
-      ssh $user@$machine "echo '$unittest PASSED  RanOn: $thismachine' > $outputdir/results.txt"
+      ssh $user@$mastermachine "echo '$unittest PASSED  RanOn: $thismachine' > $outputdir/results.txt"
   else
       echo "Test Failed"
       pushd .
@@ -34,8 +34,8 @@ do
       TestNameSimple=`echo $unittest | sed 's/.java//g'`
       FullPath=`find . -iname "*$TestNameSimple-output.txt"`
       if [ -n "$FullPath" ]; then
-        ssh $user@$machine "echo '$unittest FAILED  RanOn: $thismachine' >> $outputdir/results.txt"
-        scp $FullPath $user@$machine:$outputdir/
+        ssh $user@$mastermachine "echo '$unittest FAILED  RanOn: $thismachine' >> $outputdir/results.txt"
+        scp $FullPath $user@$mastermachine:$outputdir/
       fi
       popd
   fi
