@@ -16,6 +16,7 @@ do
     continue
   fi
 
+  pkill java
   ./run-unit-test $unittest
   retval=$?
 
