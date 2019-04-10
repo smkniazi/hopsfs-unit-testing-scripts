@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 user=vagrant
 machine=localhost
 outputdir=~/test-results
@@ -17,7 +19,7 @@ do
   fi
 
   pkill java
-  ./run-unit-test $unittest
+  $DIR/run-unit-test $unittest
   retval=$?
 
   ssh $user@$machine "mkdir -p $outputdir"
