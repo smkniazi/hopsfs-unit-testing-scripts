@@ -19,6 +19,7 @@ do
   fi
 
   pkill java
+  echo "Running $unittest"
   $DIR/run-unit-test $unittest
   retval=$?
 
