@@ -37,7 +37,7 @@ do
       FullPath=`find . -iname "*$TestNameSimple-output.txt"`
       if [ -n "$FullPath" ]; then
         ssh $user@$mastermachine "echo -e 'FAIL    $unittest\t\t\t\tRanOn: $thismachine' >> $outputdir/results.txt"
-        scp $FullPath $user@$mastermachine:$outputdir/
+        scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
       fi
       popd
   fi
