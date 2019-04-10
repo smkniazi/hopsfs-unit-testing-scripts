@@ -14,7 +14,7 @@ do
   
   if [ -z "$unittest" ]; then
     sleep 1
-    echo "Test not found"
+    echo "Waiting for tests"
     continue
   fi
 
