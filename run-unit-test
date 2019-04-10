@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ ! "$#" -eq 1 ]; then
+    echo "Please enter unit test name "
+    exit 1
+fi
+
+unittest=$1
+
+cd ~/code/hops/hops
+mvn -Pndb test -Dtest=$unittest
+retval=$?
+
+exit $retval
+
+
+

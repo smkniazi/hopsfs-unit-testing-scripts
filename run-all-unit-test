@@ -1,0 +1,41 @@
+#!/bin/bash
+
+user=vagrant
+machine=localhost
+outputdir=~/test-results
+
+while true;
+do
+  unittest=$(beanstalkd-cli --server localhost --port 8888 pop --tube testing)
+  
+  if [ -z "$unittest" ]; then
+    sleep 1
+    echo "Test not found"
+    continue
+  fi
+
+  ./run-unit-test $unittest
+  retval=$?
+
+  ssh $user@$machine "mkdir -p $outputdir"
+
+  if [ "$retval" -eq 0 ]; then
+      echo "Test Passed"
+      ssh $user@$machine "echo '$unittest PASSED' > $outputdir/results.txt"
+  else
+      echo "Test Failed"
+      pushd .
+      cd ~/code/hops/hops
+      TestNameSimple=`echo $unittest | sed 's/.java//g'`
+      FullPath=`find . -iname "*$TestNameSimple-output.txt"`
+      if [ -n "$FullPath" ]; then
+	ssh $user@$machine "echo '$unittest FAILED' >> $outputdir/results.txt"
+	scp $FullPath $user@$machine:$outputdir/
+      fi
+      popd
+  fi
+done 
+
+exit 0
+
+
