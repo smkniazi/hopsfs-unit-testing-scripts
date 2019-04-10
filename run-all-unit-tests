@@ -18,7 +18,7 @@ do
     continue
   fi
 
-  pkill java
+  killall java
   echo "Running $unittest"
   $DIR/run-unit-test $unittest
   retval=$?
