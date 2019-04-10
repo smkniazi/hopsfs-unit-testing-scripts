@@ -10,7 +10,7 @@ yum -y install kernel-headers kernel-devel fontforge binutils glibc-headers glib
 yum -y install VirtualBox-6.0
 
 cd
-wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_x86_64.rpm
-yum -y localinstall vagrant_1.8.6_x86_64.rpm
+wget https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.rpm
+yum -y localinstall vagrant_2.2.4_x86_64.rpm
 
 
