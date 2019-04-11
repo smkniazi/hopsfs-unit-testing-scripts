@@ -51,7 +51,7 @@ sed -i "s#com.mysql.clusterj.connectstring.*#com.mysql.clusterj.connectstring=lo
 sed -i "s#com.mysql.clusterj.database.*#com.mysql.clusterj.database=hop_salman#g" ndb-config.properties
 sed -i "s#io.hops.metadata.ndb.mysqlserver.host.*#io.hops.metadata.ndb.mysqlserver.host=localhost#g" ndb-config.properties
 sed -i "s#io.hops.metadata.ndb.mysqlserver.username.*#io.hops.metadata.ndb.mysqlserver.username=hop#g" ndb-config.properties
-sed -i "s#io.hops.metadata.ndb.mysqlserver.password#io.hops.metadata.ndb.mysqlserver.password=hop#g" ndb-config.properties
+sed -i "s#io.hops.metadata.ndb.mysqlserver.password.*#io.hops.metadata.ndb.mysqlserver.password=hop#g" ndb-config.properties
 
 cd ~/code/hops/hops-metadata-dal-impl-ndb/schema
 mysql -uhop -phop -hlocalhost -P3306 --protocol=TCP -f -e "DROP DATABASE IF EXISTS hop_salman" | true
