@@ -58,8 +58,7 @@ do
       echo "Test Failed"
       pushd .
       cd ~/code/hops/hops
-      TestNameSimple=`echo $unittest | sed 's/.java//g'`
-      FullPath=`find . -iname "*$TestNameSimple-output.txt"`
+      FullPath=`find . -iname "*$unittest.*txt"`
       if [ -n "$FullPath" ]; then
         ssh $user@$mastermachine "printf 'FAIL RanOn: %-9s TS: %-20s Duration: %-5s Retry: %-3s  %s\n' $thismachine $timestamp $runtime $counter $unittest >> $outputdir/results.txt"
         scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
