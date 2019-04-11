@@ -5,4 +5,5 @@ if [ ! "$#" -eq 1 ]; then
     exit 1
 fi
 
-find $1 -iname "Test*.java" -exec basename {} \;
+#find $1 -iname "Test*.java" -exec basename {} \;
+find $1 -name "Test*.java" | grep -oh "src/test/java.*" | cut -c 15- | rev | cut -c 6- | rev | tr -s "/" "."
