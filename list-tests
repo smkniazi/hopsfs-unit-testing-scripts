@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! "$#" -eq 1 ]; then
+    echo "Please enter dir "
+    exit 1
+fi
+
+find $1 -iname "Test*.java" -exec basename {} \;
