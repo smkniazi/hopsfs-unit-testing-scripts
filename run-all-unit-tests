@@ -2,9 +2,14 @@
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-user=vagrant
-mastermachine=localhost
-outputdir=/home/vagrant/test-results
+if [ ! "$#" -eq 3 ]; then
+    echo "Missing params. Example ./run-all-unit-tests {user} {hostname} {output-dir}"
+    exit 1
+fi
+
+user=$1
+mastermachine=$2
+outputdir=$3
 port=8888
 thismachine=$(hostname)
 
