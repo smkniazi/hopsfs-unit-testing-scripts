@@ -17,31 +17,30 @@ set -x
 
 cd ~/code/hops/hops-gpu-management
 clean-repo
+git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops-gpu-management-impl-nvidia
 clean-repo
+git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops-metadata-dal
 clean-repo
 git fetch
 git checkout $branch
-git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops-metadata-dal-impl-ndb
 clean-repo
 git fetch
 git checkout $branch
-git pull
 mvn clean install -DskipTests   
 
 cd ~/code/hops/hops
 clean-repo
 git fetch
 git checkout $branch
-git pull
 mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests
 mvn test-compile
 
