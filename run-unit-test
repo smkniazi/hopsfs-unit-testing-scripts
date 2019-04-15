@@ -8,8 +8,8 @@ fi
 unittest=$1
 
 cd ~/code/hops/hops
-#mvn -Pndb test -Dtest=$unittest  > /tmp/errors 2>&1
-mvn -Pndb surefire:test -Dtest=$unittest -DfailIfNoTests=false > /tmp/errors 2>&1
+mvn -Pndb test -Dtest=$unittest  > /tmp/errors 2>&1
+#mvn -Pndb surefire:test -Dtest=$unittest -DfailIfNoTests=false > /tmp/errors 2>&1
 
 retval=$?
 
