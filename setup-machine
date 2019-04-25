@@ -58,7 +58,7 @@ git clone https://github.com/smkniazi/hops-metadata-dal
 git clone https://github.com/smkniazi/hops-metadata-dal-impl-ndb
 git clone https://github.com/hopshadoop/hops-gpu-management
 git clone https://github.com/hopshadoop/hops-gpu-management-impl-nvidia
-
+git clone https://github.com/hopshadoop/hops-gpu-management-impl-amd
 
 #fix connection
 cd ~/code/hops/hops-metadata-dal-impl-ndb/src/main/resources
@@ -81,6 +81,8 @@ source ./create-tables.sh localhost 3306 hop hop hop_salman
 cd ~/code/hops/hops-gpu-management
 mvn clean install -DskipTests   
 cd ~/code/hops/hops-gpu-management-impl-nvidia
+mvn clean install -DskipTests   
+cd ~/code/hops/hops-gpu-management-impl-amd
 mvn clean install -DskipTests   
 cd ~/code/hops/hops-metadata-dal
 mvn clean install -DskipTests   

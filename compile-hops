@@ -26,6 +26,11 @@ clean-repo
 git pull
 mvn clean install -DskipTests   
 
+cd ~/code/hops/hops-gpu-management-impl-amd
+clean-repo
+git pull
+mvn clean install -DskipTests   
+
 cd ~/code/hops/hops-metadata-dal
 clean-repo
 git fetch $remote
