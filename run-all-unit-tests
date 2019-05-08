@@ -26,8 +26,14 @@ do
   if [ -z "$unittest" ]; then
     sleep 1
     echo "Waiting for tests"
+
+    #slave is idle
+    ssh $user@$mastermachine "touch $outputdir/$thismachine-idle"
     continue
   fi
+
+  #slave is not idle
+  ssh $user@$mastermachine "rm -f $outputdir/$thismachine-idle"
 
   counter=0
   start=`date +%s`
