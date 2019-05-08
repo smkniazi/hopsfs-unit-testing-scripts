@@ -56,27 +56,29 @@ do
                                
   else
       echo "Test Failed"
-      pushd .
-      cd ~/code/hops/hops
       ssh $user@$mastermachine "printf 'FAIL RanOn: %-9s TS: %-20s Duration: %-5s Retry: %-3s  %s\n' $thismachine $timestamp $runtime $counter $unittest >> $outputdir/results.txt"
 
-      FullPath=`find . -iname "*$unittest.*txt"`
-      if [ -n "$FullPath" ]; then
-        scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
-      fi
-
-      FullPath=`find . -iname "*$unittest-output.*txt"`
-      if [ -n "$FullPath" ]; then
-        scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
-      fi
-      popd
   fi
   
+  pushd .
+  cd ~/code/hops/hops
+
+  FullPath=`find . -iname "*$unittest.*txt"`
+  if [ -n "$FullPath" ]; then
+    scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+  fi
+
+  FullPath=`find . -iname "*$unittest-output.*txt"`
+  if [ -n "$FullPath" ]; then
+    scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+  fi
+
   #copy test xml file
   FullPath=`find . -iname "Test-*$unittest.*xml"`
   if [ -n "$FullPath" ]; then
     scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
   fi
+  popd
   
 done 
 
