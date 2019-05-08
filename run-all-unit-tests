@@ -53,11 +53,9 @@ do
   if [ "$retval" -eq 0 ]; then
       echo "Test Passed"
       ssh $user@$mastermachine "printf 'Pass RanOn: %-9s TS: %-20s Duration: %-5s Retry: %-3s  %s\n' $thismachine $timestamp $runtime $counter $unittest >> $outputdir/results.txt"
-                               
   else
       echo "Test Failed"
       ssh $user@$mastermachine "printf 'FAIL RanOn: %-9s TS: %-20s Duration: %-5s Retry: %-3s  %s\n' $thismachine $timestamp $runtime $counter $unittest >> $outputdir/results.txt"
-
   fi
   
   pushd .
@@ -70,13 +68,13 @@ do
 
   FullPath=`find . -iname "*$unittest-output.*txt"`
   if [ -n "$FullPath" ]; then
-    scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+    scp $FullPath "$user@$mastermachine:$outputdir/$unittest-output.txt"
   fi
 
   #copy test xml file
   FullPath=`find . -iname "Test-*$unittest.*xml"`
   if [ -n "$FullPath" ]; then
-    scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+    scp $FullPath "$user@$mastermachine:$outputdir/Test-$unittest.xml"
   fi
   popd
   
