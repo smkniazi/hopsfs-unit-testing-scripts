@@ -65,6 +65,13 @@ do
       fi
       popd
   fi
+  
+  #copy test xml file
+  FullPath=`find . -iname "*$unittest.*xml"`
+  if [ -n "$FullPath" ]; then
+    scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+  fi
+  
 done 
 
 exit 0
