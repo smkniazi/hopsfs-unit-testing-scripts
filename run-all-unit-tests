@@ -59,7 +59,13 @@ do
       pushd .
       cd ~/code/hops/hops
       ssh $user@$mastermachine "printf 'FAIL RanOn: %-9s TS: %-20s Duration: %-5s Retry: %-3s  %s\n' $thismachine $timestamp $runtime $counter $unittest >> $outputdir/results.txt"
+
       FullPath=`find . -iname "*$unittest.*txt"`
+      if [ -n "$FullPath" ]; then
+        scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
+      fi
+
+      FullPath=`find . -iname "*$unittest-output.*txt"`
       if [ -n "$FullPath" ]; then
         scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
       fi
@@ -67,7 +73,7 @@ do
   fi
   
   #copy test xml file
-  FullPath=`find . -iname "*$unittest.*xml"`
+  FullPath=`find . -iname "Test-*$unittest.*xml"`
   if [ -n "$FullPath" ]; then
     scp $FullPath "$user@$mastermachine:$outputdir/$unittest.txt"
   fi
