@@ -1,0 +1,64 @@
+#!/bin/bash
+
+if [ ! "$#" -eq 2 ]; then
+    echo "Please enter {remote} and {branch name} i.e., ./cmd salman master"
+    exit 1
+fi
+
+remote=$1
+branch=$1/$2
+
+clean-repo(){
+  git clean -df
+  sudo find . -name "target" -type d -exec rm -rf {} \; | true
+}
+
+set -e
+set -x
+
+noCommits=2
+
+echo "___________________________________________"
+echo "HOPS-GPU-MANAGEMENT"
+cd ~/code/hops/hops-gpu-management
+clean-repo
+git pull
+echo "Last $noCommits commit(s)"
+git log -n $noCommits
+
+echo "___________________________________________"
+echo "HOPS-GPU-MANAGEMENT-IMPL-NVIDIA"
+cd ~/code/hops/hops-gpu-management-impl-nvidia
+clean-repo
+git pull
+
+echo "___________________________________________"
+echo "HOPS-GPU-MANAGEMENT-IMPL-AMD"
+cd ~/code/hops/hops-gpu-management-impl-amd
+clean-repo
+git pull
+
+echo "___________________________________________"
+echo "HOPS-METADATA-DAL"
+cd ~/code/hops/hops-metadata-dal
+clean-repo
+git fetch $remote
+git checkout $branch
+
+echo "___________________________________________"
+echo "HOPS-METADATA-DAL-IMPL-NDB"
+cd ~/code/hops/hops-metadata-dal-impl-ndb
+clean-repo
+git fetch $remote
+git checkout $branch
+
+echo "___________________________________________"
+echo "HOPS"
+cd ~/code/hops/hops
+clean-repo
+git fetch $remote
+git checkout $branch
+
+exit 0
+
+
