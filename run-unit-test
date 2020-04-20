@@ -10,6 +10,7 @@ unittest=$1
 cd ~/code/hops/hops
 #mvn -Pndb test -Dtest=$unittest  > /tmp/errors 2>&1
 export AWS_CREDENTIAL_PROFILES_FILE="/home/vagrant/.aws/file"
+source /home/vagrant/.aws/azure
 mvn -o -Pndb surefire:test -Dtest=$unittest -DfailIfNoTests=false > /tmp/errors 2>&1
 
 retval=$?
