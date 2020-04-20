@@ -1,0 +1,21 @@
+BRANCH=azure-support
+GUSER=salman-ee
+
+#GUSER salman, salman-ee
+
+
+DUT=/home/tester/hops-distributed-unit-testing
+SSHCMD="ssh -p 8209 hdp@xxxxxxxxxxxxx -t ssh tester@xxxxxxxxxx "
+outputdir=$DUT/results/target
+
+
+rm -rf target
+
+$SSHCMD rm -rf $outputdir || true
+$SSHCMD $DUT/killall || true
+$SSHCMD $DUT/compile-branch $GUSER $BRANCH 
+$SSHCMD $DUT/run-all-tests $outputdir || true 
+#$SSHCMD $DUT/run-hdfs-tests $outputdir || true 
+#$SSHCMD $DUT/run-custom-tests $DUT/few-tests $outputdir || true
+
+rsync -avzhP -e "ssh -p 22 -A hdp@xxxxxxxxxxxxx ssh" tester@10.0.208.1:$outputdir/ target > /dev/null || true
