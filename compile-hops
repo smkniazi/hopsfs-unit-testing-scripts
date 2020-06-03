@@ -31,7 +31,7 @@ mvn clean install -DskipTests
 echo "___________________________________________"
 echo "HOPS"
 cd ~/code/hops/hops
-mvn clean generate-resources install -Pnative,dist -Dmaven.javadoc.skip=true -nsu -DskipTests -P '!shade'
+mvn clean generate-resources install -Pdist,native -Dtar -Dmaven.javadoc.skip=true -DskipTests
 mvn test-compile
 
 cd ~/code/hops/hops-metadata-dal-impl-ndb/src/main/resources
